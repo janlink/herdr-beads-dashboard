@@ -23,3 +23,7 @@ Commands: `focus`, `refresh`, `wide`, `view:overview|tree|ready|open|all`,
 `copy`, `insert`, `lang:de|en|auto`.
 
 See [RECIPE.md](RECIPE.md) for the full description.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
