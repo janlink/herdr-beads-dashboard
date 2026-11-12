@@ -9,7 +9,7 @@ and a full-tab dashboard. English or German (follows the system).
 ## Install
 
 Copy `mods/beads-dashboard/` to `~/.config/herdr-app/mods/` (or ask your Herdr
-agent to add `herdr.dev/mods/<owner>/beads-dashboard`). `bd` must be installed
+agent to add `github.com/<owner>/herdr-beads-dashboard`). `bd` must be installed
 on each machine whose repos you open (Windows and WSL count separately).
 
 Optional keys (`keys.json`), e.g.:
