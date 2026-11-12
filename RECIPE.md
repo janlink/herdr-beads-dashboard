@@ -176,7 +176,22 @@ reload."), "bd error", "Loading beads…".
   separately). It writes only through Start/Close/Reopen.
 - The ids drop the prefix all ids share; the full id is in the tooltip and the
   detail.
-- `place: "right"` docks it once on first sight; after that the layout decides.
+- `place: "right"` docks it once on first sight, into the layout shown then;
+  after that the layout decides. On a personal layout (one you wrote or
+  cloned) it lands in that layout. Herdr's shipped layouts (`main`,
+  `terminals`, `win98`) are read-only, so there it does not dock at all (seen
+  on Herdr 0.1.15), and the shipped `tabs` bar only has the Files and Changes
+  buttons. For a tab-bar button like theirs, clone both and point the clone at
+  the clones: `layout.clone {"name":"main","as":"main-beads"}`, `mod.clone
+  {"name":"tabs","as":"tabs-beads"}`; in `layouts/main-beads.json` add
+  `{ "id": "beads", "type": "block", "content": { "mod": "beads-dashboard" } }`
+  to the `panel-body` stack and set the `tabs` block's mod to `tabs-beads`; in
+  `mods/tabs-beads/main.js` append `"beads"` to `enabled` and add
+  `panelButton("beads", "Beads", "mods/beads-dashboard/beads.svg")` after the
+  Changes button. Clones get no Herdr updates.
+- Worktrees on git before 2.31: `--path-format=absolute` is unknown there and
+  git echoes it as its own output line, so only the last line of
+  `rev-parse --git-common-dir` counts, and only if it is an absolute path.
 
 ## Done when
 

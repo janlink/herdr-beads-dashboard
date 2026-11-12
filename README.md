@@ -12,6 +12,11 @@ Copy `mods/beads-dashboard/` to `~/.config/herdr-app/mods/` (or ask your Herdr
 agent to add `github.com/janlink/herdr-beads-dashboard`). `bd` must be installed
 on each machine whose repos you open (Windows and WSL count separately).
 
+It docks on the right of the layout shown when Herdr first sees it. Herdr's own
+layouts (`main` and the others it ships) are read-only, so there it does not
+appear by itself; for a tab-bar button next to Files and Changes, clone the
+layout and the `tabs` mod as described under "Watch out" in [RECIPE.md](RECIPE.md).
+
 Optional keys (`keys.json`), e.g.:
 
 ```json

@@ -192,7 +192,7 @@ const RESOLVE = [
   'ok() { [ -f "$1/.beads/metadata.json" ] || [ -f "$1/.beads/config.yaml" ]; }',
   'd=$(pwd -P); g=$(git rev-parse --show-toplevel 2>/dev/null); echo "G $g"; echo "U $(git config user.name 2>/dev/null)"',
   'while :; do if ok "$d"; then echo "B $d"; exit 0; fi; [ "$d" = "${g:-/}" ] && break; [ "$d" = / ] && break; d=$(dirname "$d"); done',
-  'c=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null); if [ -n "$c" ]; then m=$(dirname "$c"); if [ "$m" != "$g" ] && ok "$m"; then echo "B $m"; fi; fi',
+  'c=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null | tail -n 1); case "$c" in /*) ;; *) c=;; esac; if [ -n "$c" ]; then m=$(dirname "$c"); if [ "$m" != "$g" ] && ok "$m"; then echo "B $m"; fi; fi',
   'exit 0',
 ].join("\n");
 
@@ -509,7 +509,9 @@ export default class Beads extends View {
       if (up === d) break;
       d = up;
     }
-    const common = norm(await git(["rev-parse", "--path-format=absolute", "--git-common-dir"]));
+    // git before 2.31 echoes the unknown --path-format option as a line of its own: keep the last line, and only an absolute path.
+    const commonRaw = (await git(["rev-parse", "--path-format=absolute", "--git-common-dir"])).split("\n").pop()?.trim() ?? "";
+    const common = isWinPath(commonRaw) ? norm(commonRaw) : null;
     if (common) { const m = parentDir(common); if (!samePath(m, g) && await ok(m)) return done(m); }
     return done(null);
   }
